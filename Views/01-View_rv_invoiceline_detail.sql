@@ -67,7 +67,8 @@ CREATE MATERIALIZED VIEW rv_invoiceline_detail AS
     gettransactionpurchaseprice(il.c_invoiceline_id) AS pricepo,
     gettransactionmarge_abs(il.c_invoiceline_id) AS marge_abs,
     p.M_Product_Group_ID,
-    p.producttype
+    p.producttype,
+    i.C_Currency_ID
    FROM c_invoice i
      JOIN c_invoiceline il ON i.c_invoice_id = il.c_invoice_id
      JOIN ad_client cl ON i.ad_client_id = cl.ad_client_id
