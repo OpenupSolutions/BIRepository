@@ -41,7 +41,8 @@ BEGIN
 
 	WHERE C_Invoiceline_ID=p_invoicereversalline_id
 
-	AND (i_Isimported = 'N' OR (i_Isimported='Y' and importtype = 'RE'))
+  -- Head documentation: C_Invoiceline.i_Isimported does not exist, delete line
+	-- AND (i_Isimported = 'N' OR (i_Isimported='Y' and importtype = 'RE'))
 	;
 
 	

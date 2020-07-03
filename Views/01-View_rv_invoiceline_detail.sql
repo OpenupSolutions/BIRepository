@@ -6,7 +6,7 @@
 
 -- DROP MATERIALIZED VIEW rv_invoiceline_detail;
 
-CREATE MATERIALIZED VIEW rv_invoiceline_detail AS 
+CREATE MATERIALIZED VIEW rv_invoiceline_detail AS
  SELECT i.ad_client_id,
     i.ad_org_id,
     i.dateinvoiced,
@@ -66,8 +66,8 @@ CREATE MATERIALIZED VIEW rv_invoiceline_detail AS
     ppo.order_min,
     gettransactionpurchaseprice(il.c_invoiceline_id) AS pricepo,
     gettransactionmarge_abs(il.c_invoiceline_id) AS marge_abs,
-    p.producttype,
-    dt.isdiscountallowedontotal
+    p.M_Product_Group_ID,
+    p.producttype
    FROM c_invoice i
      JOIN c_invoiceline il ON i.c_invoice_id = il.c_invoice_id
      JOIN ad_client cl ON i.ad_client_id = cl.ad_client_id

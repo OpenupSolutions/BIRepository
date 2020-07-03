@@ -22,7 +22,7 @@ sum(sum(ild.netsales)) OVER (ORDER BY ild.dateinvoicedmonth ASC ROWS BETWEEN UNB
 
 FROM rv_invoiceline_detail ild
 WHERE ild.dateinvoiced BETWEEN {{Fecha_inicio}} AND {{Fecha_final}}
-AND AD_Client_ID = 1000000 
+AND AD_Client_ID = 1000001 -- AD_Client_ID -> ZonaPhone 
 AND issotrx = 'Y'
 AND docstatus in ('CO','VO') 
 AND docbasetype = 'ARI' 
