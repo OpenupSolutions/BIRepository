@@ -1,4 +1,4 @@
--- Materialized view for sales
+﻿-- Materialized view for sales
 -- displays invoice lines
 -- includes costs, redundant names
 
@@ -68,7 +68,11 @@ CREATE MATERIALIZED VIEW rv_invoiceline_detail AS
     gettransactionmarge_abs(il.c_invoiceline_id) AS marge_abs,
     p.M_Product_Group_ID,
     p.producttype,
-    i.C_Currency_ID
+    i.C_Currency_ID,
+    sc.S_Contract_ID,
+    camp.C_Campaign_ID,
+    camp.name campaign_name,
+    pg.name product_group_name
    FROM c_invoice i
      JOIN c_invoiceline il ON i.c_invoice_id = il.c_invoice_id
      JOIN ad_client cl ON i.ad_client_id = cl.ad_client_id
@@ -77,6 +81,7 @@ CREATE MATERIALIZED VIEW rv_invoiceline_detail AS
      JOIN c_tax tax ON il.c_tax_id = tax.c_tax_id
      LEFT JOIN c_tax_trl taxtrl ON tax.c_tax_id = taxtrl.c_tax_id AND cl.ad_language::text = taxtrl.ad_language::text
      JOIN m_product p ON il.m_product_id = p.m_product_id
+     LEFT JOIN M_Product_Group pg ON p.M_Product_Group_ID=pg.M_Product_Group_ID
      JOIN m_product_category pc ON p.m_product_category_id = pc.m_product_category_id
      LEFT JOIN m_product_po ppo ON p.m_product_id = ppo.m_product_id AND ppo.iscurrentvendor = 'Y'::bpchar
      LEFT JOIN c_bpartner vnd ON ppo.c_bpartner_id = vnd.c_bpartner_id
@@ -85,6 +90,8 @@ CREATE MATERIALIZED VIEW rv_invoiceline_detail AS
      LEFT JOIN c_doctype_trl dtt ON dt.c_doctype_id = dtt.c_doctype_id AND cl.ad_language::text = dtt.ad_language::text
      LEFT JOIN c_period per ON i.dateinvoiced >= per.startdate AND i.dateinvoiced <= per.enddate AND per.ad_client_id = i.ad_client_id
      JOIN c_bpartner bp ON i.c_bpartner_id = bp.c_bpartner_id
+     LEFT JOIN S_Contract sc ON i.S_Contract_ID=sc.S_Contract_ID
+     LEFT JOIN C_Campaign camp ON i.C_Campaign_ID=camp.C_Campaign_ID
 WITH DATA;
 
 ALTER TABLE rv_invoiceline_detail
