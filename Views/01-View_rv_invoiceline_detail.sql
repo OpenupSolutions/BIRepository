@@ -79,10 +79,10 @@ CREATE MATERIALIZED VIEW rv_invoiceline_detail AS
 	usr1.value usr1_value,
 	i.User3_ID,
 	usr3.name usr3_name,
-	usr3.value usr1_value,
+	usr3.value usr3_value,
 	i.User4_ID,
 	usr4.name usr4_name,
-	usr4.value usr1_value
+	usr4.value usr4_value
    FROM c_invoice i
      JOIN c_invoiceline il ON i.c_invoice_id = il.c_invoice_id
      JOIN ad_client cl ON i.ad_client_id = cl.ad_client_id
