@@ -72,7 +72,17 @@ CREATE MATERIALIZED VIEW rv_invoiceline_detail AS
     sc.S_Contract_ID,
     camp.C_Campaign_ID,
     camp.name campaign_name,
-    pg.name product_group_name
+    pg.name product_group_name,
+	sc.name contract_name,
+	i.User1_ID,
+	usr1.name usr1_name,
+	usr1.value usr1_value,
+	i.User3_ID,
+	usr3.name usr3_name,
+	usr3.value usr1_value,
+	i.User4_ID,
+	usr4.name usr4_name,
+	usr4.value usr1_value
    FROM c_invoice i
      JOIN c_invoiceline il ON i.c_invoice_id = il.c_invoice_id
      JOIN ad_client cl ON i.ad_client_id = cl.ad_client_id
@@ -92,6 +102,9 @@ CREATE MATERIALIZED VIEW rv_invoiceline_detail AS
      JOIN c_bpartner bp ON i.c_bpartner_id = bp.c_bpartner_id
      LEFT JOIN S_Contract sc ON i.S_Contract_ID=sc.S_Contract_ID
      LEFT JOIN C_Campaign camp ON i.C_Campaign_ID=camp.C_Campaign_ID
+	 LEFT JOIN C_ElementValue usr1 ON i.User1_ID=usr1.C_ElementValue_ID
+	 LEFT JOIN C_ElementValue usr3 ON i.User3_ID=usr3.C_ElementValue_ID
+	 LEFT JOIN C_ElementValue usr4 ON i.User4_ID=usr4.C_ElementValue_ID
 WITH DATA;
 
 ALTER TABLE rv_invoiceline_detail
